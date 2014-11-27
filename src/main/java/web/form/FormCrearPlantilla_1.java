@@ -17,8 +17,8 @@ private List<PropertiesSpinner> spinners;
 
 private boolean buttonSiguiente;
 
-public FormCrearPlantilla_1(boolean render, boolean habilitado) {
-	super(render, habilitado);
+public FormCrearPlantilla_1(boolean render, boolean deshabilitado) {
+	super(render, deshabilitado);
 	// TODO Auto-generated constructor stub
 	setCheckboxs(new ArrayList<PropertiesCheckBox>(){{
 		add(new PropertiesCheckBox(true, false, false));//Header
@@ -66,19 +66,19 @@ public void setButtonSiguiente(boolean buttonSiguiente) {
 }
 public void actionEventCheckBoxHeader(){
 		getCheckboxs().set(2, new PropertiesCheckBox(true, !getCheckboxs().get(0).isMarcado(), false));//Checkbox Footer	
-		getSpinners().set(0, new PropertiesSpinner(true, !getCheckboxs().get(0).isMarcado()));//Combo Header
-		getSpinners().set(1, new PropertiesSpinner(true, !getCheckboxs().get(2).isMarcado()));
+		getSpinners().set(0, new PropertiesSpinner(true, !getCheckboxs().get(0).isMarcado(),1));//Combo Header
+		getSpinners().set(1, new PropertiesSpinner(true, !getCheckboxs().get(2).isMarcado(),1));
 		setButtonSiguiente(!(getCheckboxs().get(0).isMarcado()||getCheckboxs().get(1).isMarcado()));
 }
 public void actionEventCheckBoxDetail(){
 	setButtonSiguiente(!(getCheckboxs().get(0).isMarcado()||getCheckboxs().get(1).isMarcado()));	
 }
-public void actionEventCheckBoxFooter(){
-	getSpinners().set(1, new PropertiesSpinner(true, !getCheckboxs().get(2).isMarcado()));	
+public void actionEventCheckBoxFooter(){	
+	getSpinners().get(1).setRender(true);
+	getSpinners().get(1).setDeshabilitado(!getCheckboxs().get(2).isMarcado());
 }
 
-public void actionEventComboHeader(){//Establece el limite a footer
-	getSpinners().set(1, new PropertiesSpinner(true, !getCheckboxs().get(1).isMarcado()));
-	}
-
+public void actionEventSpinnerHeader(){//Update Spinner Footer change value Footer
+	getSpinners().get(1).setCantidad(getSpinners().get(0).getCantidad());
+}
 }

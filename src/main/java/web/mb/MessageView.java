@@ -26,6 +26,9 @@ public class MessageView implements Serializable{
 			break;
 		case 4://Configuracion No válida
 			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Configuración erronea","La configuración no es válida"));		
+			break;
+		case 5://Configuracion Ventana Transformado
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Carácter no válido","Ingrese cácacter válido."));		
 			break;			
 		default:
 			break;

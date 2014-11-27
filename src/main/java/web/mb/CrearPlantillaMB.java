@@ -3,18 +3,21 @@ package web.mb;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
-import org.primefaces.context.RequestContext;
+import org.primefaces.event.TabChangeEvent;
 
 import web.form.FormCrearPlantilla_1;
 import web.form.FormCrearPlantilla_2;
 import web.form.RowTemplate;
+import web.util.PropertiesGUI;
 import web.util.PropertiesOneMenu;
 import web.util.PropertiesVentanaTransformado;
 import web.util.Util;
@@ -29,12 +32,20 @@ private static final long serialVersionUID = 1L;
 private FormCrearPlantilla_1 form1;
 private FormCrearPlantilla_2 form2;
 private List<RowTemplate> rows;
+
+/**
+ * Query's 
+ */
 private String query;
+/**
+ * Properties File
+ */
 private Properties props;
+private RowTemplate selectedRow;//Selection Table
 
-//Filas Seleccionadas
-private RowTemplate selectedRow;
-
+//Seleccionados
+private RowTemplate rowsel;
+private PropertiesGUI fa;//Funcion Adicional
 @ManagedProperty(value="#{msg}")
 private MessageView message;
 @PostConstruct
@@ -44,37 +55,88 @@ private void init(){
 	 */	
 	form1=new FormCrearPlantilla_1(true,false);
 	//1er parametro Form 2--> button Aceptar Dialog SQL 
-	form2=new FormCrearPlantilla_2(false,false);	
+	form2=new FormCrearPlantilla_2(false,true);
 	this.setRows(new ArrayList<RowTemplate>());
+	setSelectedRow(new RowTemplate());	
 	setQuery("");
+	setFa(new PropertiesGUI(true,true));
+	setRowsel(new RowTemplate(new PropertiesVentanaTransformado(true,true)));	
 	props=Util.getProperties("parametros.properties");
 }
-public FormCrearPlantilla_1 getForm1() {
-	return form1;
+public void ontTabChange(TabChangeEvent event){
+	if(event.getTab().getId().equals("tab2")){
+		cargarItemsComboGrupal();	
+	}
 }
-public void setForm1(FormCrearPlantilla_1 form1) {
-	this.form1 = form1;
-}
-public boolean validarConsultaSQL(){
+/**
+ * 
+ * @param opcion
+ * 1:Consulta SQL General
+ * 2:Consulta SQL Group By
+ */
+public void validarConsultaSQL(int opcion){
 	if(query.equals("sql")){		
 		message.showMessage(1);
-		form2.setRender(true);
-		return true;	
-	}else{		
-		form2.setRender(false);
+		if (opcion==1) {
+			form2.setRender(true);
+			form2.setDeshabilitado(false);
+		}else if(opcion==2){
+			fa.setRender(true);
+			fa.setDeshabilitado(false);			
+		}
+	}else{
 		message.showMessage(2);
-		return false;
+		if (opcion==1) {
+			form2.setRender(false);
+			form2.setDeshabilitado(true);
+		}else if(opcion==2){
+			fa.setRender(false);
+			fa.setDeshabilitado(true);
+		}
 	}	
 }
 
-public void eventButtonContinuar(){	
+
+public void listenerCaracterValido(){
+	if(!rowsel.getTransformado().getCaracter().equals("")){
+		rowsel.getTransformado().setDeshabilitado(false);
+	}else{
+		rowsel.getTransformado().setDeshabilitado(true);
+		message.showMessage(5);
+	}
+}
+
+public void actionOneMenuVT(RowTemplate row){
+	RowTemplate raw=row;
+	System.out.println("Size: "+rows.size());
+	System.out.println("Id: "+row.getId());
+	System.out.println("Caracter : "+raw.getTransformado().getCaracter());
+	System.out.println("Posicion :"+raw.getTransformado().getPosicion());
+	setRowsel(raw);
+}
+
+public void actionButtonSaveVT(){	
+	this.rows.set(getRowsel().getId(), getRowsel());	
+}
+
+public  void actionButtonViewVT(RowTemplate row){
+	RowTemplate raw=row;
+	System.out.println("Size: "+rows.size());
+	System.out.println("Fila View:"+row.getId());
+	System.out.println("Caracter : "+raw.getTransformado().getCaracter());
+	System.out.println("Posicion :"+raw.getTransformado().getPosicion());
+	this.setRowsel(raw);
+}
+
+public void listenerButtonContinuar(){	
 	cargarItemsComboGrupal();
 	//Limpia la tabla luego de presionar el button "Siguiente"
 	//del dialogo.
-	rows=new ArrayList<RowTemplate>();
+	form2.setDeshabilitado(false);		
 }
 
-private void cargarItemsComboGrupal(){//Combo Grupal
+
+public void cargarItemsComboGrupal(){//Combo Grupal
 	//H1,H2,H3,D,F1,F2,F3
 	//Se considera solo un detail "D"
 	List<String> items=new ArrayList<String>();
@@ -96,6 +158,8 @@ private void cargarItemsComboGrupal(){//Combo Grupal
 	}
 	//
 	form2.getCombos().set(0,new PropertiesOneMenu(true, false, items));
+	//Se limpia la tabla convencionalmente ...
+	rows=new ArrayList<RowTemplate>();
 }
 
 private void cargarCamposCombo(){
@@ -117,22 +181,35 @@ public void reconocedorSubCombo(){
 	 * y lo plasma en el datatable
 	 */	
 	PropertiesVentanaTransformado propVT=new 
-			PropertiesVentanaTransformado(true, true, false, "*", 0);
+			PropertiesVentanaTransformado(true, true, false, "", 2);
 	String item=form2.getCombos().get(0).getItemSel();
 	String label=form2.getCombos().get(1).getItemSel();
 	
 	if (!label.equalsIgnoreCase("") && !item.equalsIgnoreCase("")) {
-		RowTemplate row = new RowTemplate(1, item, label, 4, 0, false, propVT);
+		RowTemplate row = new RowTemplate(rows.size(), item, label, 4, 0, false, propVT);
 		rows.add(row);
-	}	
+	}
+	for(RowTemplate row:rows){
+		System.out.println("Row "+row.getId());
+		System.out.println("Caracter"+row.getTransformado().getCaracter());
+		System.out.println("Posicion"+row.getTransformado().getPosicion());
+		System.out.println();
+	}
 }
 public void agregarFA(){
 	
 }
-public void eliminarFila(){//Antes eliminarFA
+public void eliminarFila(){//Antes eliminarFA	
+
 	rows.remove(selectedRow);
-	selectedRow=null;
+	//Al eliminar alguna de las filas se desplazan las filas segun el indice.
+	//rowsel indexar a rows
+	for(int i=selectedRow.getId();i<rows.size();i++){
+		rows.get(i).setId(i);
+		System.out.println(rows.get(i).getNombre());
+	}	
 }
+
 public void validarConfiguracionPlantilla(){
 	/**
 	 * Notificar el p:message msgConf segun la validez de la configuracion de la plantilla
@@ -170,5 +247,25 @@ public RowTemplate getSelectedRow() {
 }
 public void setSelectedRow(RowTemplate selectedRow) {
 	this.selectedRow = selectedRow;
+}
+
+public PropertiesGUI getFa() {
+	return fa;
+}
+public void setFa(PropertiesGUI fa) {
+	this.fa = fa;
+}
+
+public FormCrearPlantilla_1 getForm1() {
+	return form1;
+}
+public void setForm1(FormCrearPlantilla_1 form1) {
+	this.form1 = form1;
+}
+public RowTemplate getRowsel() {
+	return rowsel;
+}
+public void setRowsel(RowTemplate rowsel) {
+	this.rowsel = rowsel;
 }
 }

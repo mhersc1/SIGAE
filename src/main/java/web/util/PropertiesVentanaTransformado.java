@@ -1,10 +1,14 @@
 package web.util;
 
 
-public class PropertiesVentanaTransformado extends PropertiesGUI{
+public class PropertiesVentanaTransformado extends PropertiesGUI{	
 	private boolean transformado;
 	private String 	caracter;
 	private Integer posicion;//0:Izquierda 1:Derecha
+	
+	public PropertiesVentanaTransformado() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	public PropertiesVentanaTransformado(boolean render, boolean deshabilitado) {
 		super(render, deshabilitado);

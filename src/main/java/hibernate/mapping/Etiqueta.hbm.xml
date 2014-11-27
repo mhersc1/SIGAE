@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 27/11/2014 02:28:58 AM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="model.Etiqueta" table="etiqueta" catalog="dbsigae">
+        <composite-id name="id" class="model.EtiquetaId">
+            <key-property name="idEtiqueta" type="int">
+                <column name="idETIQUETA" />
+            </key-property>
+            <key-property name="idPlantilla" type="int">
+                <column name="idPLANTILLA" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="plantilla" class="model.Plantilla" update="false" insert="false" fetch="select">
+            <column name="idPLANTILLA" not-null="true" />
+        </many-to-one>
+        <property name="tipoEtiqueta" type="string">
+            <column name="Tipo_Etiqueta" length="20" />
+        </property>
+        <property name="cantidad" type="java.lang.Integer">
+            <column name="cantidad" />
+        </property>
+        <set name="nivelconfigs" table="nivelconfig" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idETIQUETA" not-null="true" />
+                <column name="idPLANTILLA" not-null="true" />
+            </key>
+            <one-to-many class="model.Nivelconfig" />
+        </set>
+    </class>
+</hibernate-mapping>

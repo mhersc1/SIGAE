@@ -26,6 +26,10 @@ public class RowTemplate {
 		this.transformado = transformado;
 	}
 	
+	public RowTemplate(PropertiesVentanaTransformado transformado){
+		this.transformado=transformado;	
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}

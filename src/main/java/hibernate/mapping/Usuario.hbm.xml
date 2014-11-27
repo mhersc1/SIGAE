@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 27/11/2014 02:28:58 AM by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="model.Usuario" table="usuario" catalog="dbsigae">
+        <composite-id name="id" class="model.UsuarioId">
+            <key-property name="idUsuario" type="int">
+                <column name="idUsuario" />
+            </key-property>
+            <key-property name="idPerfil" type="int">
+                <column name="idPerfil" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="perfil" class="model.Perfil" update="false" insert="false" fetch="select">
+            <column name="idPerfil" not-null="true" />
+        </many-to-one>
+        <property name="nombre" type="string">
+            <column name="nombre" length="20" />
+        </property>
+        <property name="apellidoPaterno" type="string">
+            <column name="apellido_paterno" length="10" />
+        </property>
+        <property name="apellidoMaterno" type="string">
+            <column name="apellido_materno" length="10" />
+        </property>
+        <property name="usuario" type="string">
+            <column name="usuario" length="6" />
+        </property>
+        <property name="contrasenia" type="string">
+            <column name="contrasenia" length="8" />
+        </property>
+        <property name="sexo" type="string">
+            <column name="sexo" length="1" />
+        </property>
+        <property name="edad" type="java.lang.Integer">
+            <column name="edad" />
+        </property>
+        <property name="estado" type="java.lang.Integer">
+            <column name="estado" />
+        </property>
+    </class>
+</hibernate-mapping>

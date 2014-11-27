@@ -9,8 +9,8 @@ import web.util.PropertiesOneMenu;
 public class FormCrearPlantilla_2 extends PropertiesGUI{
 	private List<PropertiesOneMenu> combos;
 	
-	public FormCrearPlantilla_2(boolean render, boolean habilitado) {
-		super(render, habilitado);
+	public FormCrearPlantilla_2(boolean render, boolean deshabilitado) {
+		super(render, deshabilitado);
 		// TODO Auto-generated constructor stub
 		setCombos(new ArrayList<PropertiesOneMenu>(){{
 			add(new PropertiesOneMenu(true, false));//Combo Grupal
