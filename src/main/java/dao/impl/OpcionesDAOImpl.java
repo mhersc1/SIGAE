@@ -1,34 +1,44 @@
-package dao;
-import hibernate.HibernateUtil;
+package dao.impl;
+// Generated 27/11/2014 02:39:51 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.List;
 
 import javax.naming.InitialContext;
 
-import model.Caracteristicas;
-import model.CaracteristicasId;
+import model.Opciones;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
+import dao.inf.OpcionesDAO;
+
 /**
- * Home object for domain model class Caracteristicas.
- * @see .Caracteristicas
+ * Home object for domain model class Opciones.
+ * @see .Opciones
  * @author Hibernate Tools
  */
-public class CaracteristicasHome {
+public class OpcionesDAOImpl implements OpcionesDAO{
 
-	private static final Log log = LogFactory.getLog(CaracteristicasHome.class);
+	private static final Log log = LogFactory.getLog(OpcionesDAOImpl.class);
 
-	private final SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+	private final SessionFactory sessionFactory = getSessionFactory();
 
+	protected SessionFactory getSessionFactory() {
+		try {
+			return (SessionFactory) new InitialContext()
+					.lookup("SessionFactory");
+		} catch (Exception e) {
+			log.error("Could not locate SessionFactory in JNDI", e);
+			throw new IllegalStateException(
+					"Could not locate SessionFactory in JNDI");
+		}
+	}
 
-	public void persist(Caracteristicas transientInstance) {
-		log.debug("persisting Caracteristicas instance");
+	public void persist(Opciones transientInstance) {
+		log.debug("persisting Opciones instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -38,8 +48,8 @@ public class CaracteristicasHome {
 		}
 	}
 
-	public void attachDirty(Caracteristicas instance) {
-		log.debug("attaching dirty Caracteristicas instance");
+	public void attachDirty(Opciones instance) {
+		log.debug("attaching dirty Opciones instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -49,8 +59,8 @@ public class CaracteristicasHome {
 		}
 	}
 
-	public void attachClean(Caracteristicas instance) {
-		log.debug("attaching clean Caracteristicas instance");
+	public void attachClean(Opciones instance) {
+		log.debug("attaching clean Opciones instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -60,8 +70,8 @@ public class CaracteristicasHome {
 		}
 	}
 
-	public void delete(Caracteristicas persistentInstance) {
-		log.debug("deleting Caracteristicas instance");
+	public void delete(Opciones persistentInstance) {
+		log.debug("deleting Opciones instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -71,11 +81,11 @@ public class CaracteristicasHome {
 		}
 	}
 
-	public Caracteristicas merge(Caracteristicas detachedInstance) {
-		log.debug("merging Caracteristicas instance");
+	public Opciones merge(Opciones detachedInstance) {
+		log.debug("merging Opciones instance");
 		try {
-			Caracteristicas result = (Caracteristicas) sessionFactory
-					.getCurrentSession().merge(detachedInstance);
+			Opciones result = (Opciones) sessionFactory.getCurrentSession()
+					.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -84,11 +94,11 @@ public class CaracteristicasHome {
 		}
 	}
 
-	public Caracteristicas findById(CaracteristicasId id) {
-		log.debug("getting Caracteristicas instance with id: " + id);
+	public Opciones findById(int id) {
+		log.debug("getting Opciones instance with id: " + id);
 		try {
-			Caracteristicas instance = (Caracteristicas) sessionFactory
-					.getCurrentSession().get("Caracteristicas", id);
+			Opciones instance = (Opciones) sessionFactory.getCurrentSession()
+					.get("Opciones", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -101,12 +111,12 @@ public class CaracteristicasHome {
 		}
 	}
 
-	public List findByExample(Caracteristicas instance) {
-		log.debug("finding Caracteristicas instance by example");
+	public List findByExample(Opciones instance) {
+		log.debug("finding Opciones instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
-					.createCriteria("Caracteristicas")
-					.add(Example.create(instance)).list();
+					.createCriteria("Opciones").add(Example.create(instance))
+					.list();
 			log.debug("find by example successful, result size: "
 					+ results.size());
 			return results;
@@ -114,10 +124,5 @@ public class CaracteristicasHome {
 			log.error("find by example failed", re);
 			throw re;
 		}
-	}
-	
-	public List<Caracteristicas> getAll(){
-		Session session=this.sessionFactory.openSession();
-		return session.createQuery("from Caracteristicas").list();
 	}
 }

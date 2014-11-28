@@ -1,4 +1,5 @@
 package model;
+
 // Generated 27/11/2014 02:27:56 AM by Hibernate Tools 3.4.0.CR1
 
 /**
@@ -6,30 +7,30 @@ package model;
  */
 public class EtiquetaId implements java.io.Serializable {
 
-	private int idEtiqueta;
-	private int idPlantilla;
+	private Integer idEtiqueta;
+	private Integer idPlantilla;
 
 	public EtiquetaId() {
 	}
 
-	public EtiquetaId(int idEtiqueta, int idPlantilla) {
+	public EtiquetaId(Integer idEtiqueta, Integer idPlantilla) {
 		this.idEtiqueta = idEtiqueta;
 		this.idPlantilla = idPlantilla;
 	}
 
-	public int getIdEtiqueta() {
+	public Integer getIdEtiqueta() {
 		return this.idEtiqueta;
 	}
 
-	public void setIdEtiqueta(int idEtiqueta) {
+	public void setIdEtiqueta(Integer idEtiqueta) {
 		this.idEtiqueta = idEtiqueta;
 	}
 
-	public int getIdPlantilla() {
+	public Integer getIdPlantilla() {
 		return this.idPlantilla;
 	}
 
-	public void setIdPlantilla(int idPlantilla) {
+	public void setIdPlantilla(Integer idPlantilla) {
 		this.idPlantilla = idPlantilla;
 	}
 
@@ -46,12 +47,6 @@ public class EtiquetaId implements java.io.Serializable {
 				&& (this.getIdPlantilla() == castOther.getIdPlantilla());
 	}
 
-	public int hashCode() {
-		int result = 17;
 
-		result = 37 * result + this.getIdEtiqueta();
-		result = 37 * result + this.getIdPlantilla();
-		return result;
-	}
 
 }

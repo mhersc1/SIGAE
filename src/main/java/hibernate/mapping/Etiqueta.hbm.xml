@@ -5,10 +5,10 @@
 <hibernate-mapping>
     <class name="model.Etiqueta" table="etiqueta" catalog="dbsigae">
         <composite-id name="id" class="model.EtiquetaId">
-            <key-property name="idEtiqueta" type="int">
+            <key-property name="idEtiqueta" type="java.lang.Integer">
                 <column name="idETIQUETA" />
             </key-property>
-            <key-property name="idPlantilla" type="int">
+            <key-property name="idPlantilla" type="java.lang.Integer">
                 <column name="idPLANTILLA" />
             </key-property>
         </composite-id>

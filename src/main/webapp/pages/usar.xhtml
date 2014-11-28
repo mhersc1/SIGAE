@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+
+
+<h:body>
+
+	<h:form>
+		<p:growl>
+			<p:panel id="consultar" header="Busqueda de plantilla "
+				footer="consultar" style="margin-bottom:20px">
+				<h:panelGrid columns="2" cellpadding="10">
+
+					<h:form>
+						<p:commandButton value="CONSULTAR" id="bconsultar"
+							actionListener="#{UsarController.consultar}" />
+
+					</h:form>
+
+					<p:dataTable id="listadeplantilla" var="list"
+						value="#{usarController.plantilla}" selectionMode="single"
+						selection="#{usarController.plant}" rowKey="#{list.nombre}">
+						<f:facet name="header"> Lista de Plantilla</f:facet>
+						<p:column headerText="Nombre">
+							<h:outputText value="#{list.nombre}" />
+						</p:column>
+
+
+					</p:dataTable>
+
+
+				</h:panelGrid>
+
+
+
+			</p:panel>
+
+
+			<p:panel id="CaractPlantilla"
+				header="Las Caracteristicas de la Plantilla "
+				style="margin-bottom:20px">
+
+
+				<p:dataTable id="Caractdeplantilla" var="atri"
+					value="#{usarController.caracteristicas}">
+
+					<p:column headerText="Campo">
+						<h:outputText value="#{atri.nombre}" />
+					</p:column>
+					<p:column headerText="Tipo">
+						<h:outputText value="#{atri.tipo}" />
+					</p:column>
+					<p:column headerText="Tamaño">
+						<h:outputText value="#{atri.tamaño}" />
+					</p:column>
+					<p:column headerText="Cifrado">
+						<h:outputText value="#{atri.cifrado}" />
+					</p:column>
+					<p:column headerText="Transformado">
+						<h:outputText value="#{atri.transformado}" />
+					</p:column>
+
+				</p:dataTable>
+
+			</p:panel>
+
+			<p:panel>
+				<h:panelGrid columns="2">
+
+					<h:form>
+
+						<p:commandButton value="Generar Archivo"
+							actionListener="#{usarController.generar}"
+							icon="iu-icon-document" />
+
+					</h:form>
+
+					<h:form>
+						<p:commandButton value="Modificar Plantilla"
+							action="modificar" 
+							icon="iu-icon-arrowrefresh-1-s" />
+
+
+					</h:form>
+
+
+
+				</h:panelGrid>
+
+
+			</p:panel>
+
+
+		</p:growl>
+
+
+
+
+	</h:form>
+
+
+
+</h:body>
+
+</html>

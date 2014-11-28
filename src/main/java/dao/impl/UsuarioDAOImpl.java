@@ -1,12 +1,12 @@
-package dao;
+package dao.impl;
 // Generated 27/11/2014 02:39:51 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.List;
 
 import javax.naming.InitialContext;
 
-import model.Nivelconfig;
-import model.NivelconfigId;
+import model.Usuario;
+import model.UsuarioId;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,14 +14,16 @@ import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
+import dao.inf.UsuarioDAO;
+
 /**
- * Home object for domain model class Nivelconfig.
- * @see .Nivelconfig
+ * Home object for domain model class Usuario.
+ * @see .Usuario
  * @author Hibernate Tools
  */
-public class NivelconfigHome {
+public class UsuarioDAOImpl implements UsuarioDAO{
 
-	private static final Log log = LogFactory.getLog(NivelconfigHome.class);
+	private static final Log log = LogFactory.getLog(UsuarioDAOImpl.class);
 
 	private final SessionFactory sessionFactory = getSessionFactory();
 
@@ -36,8 +38,8 @@ public class NivelconfigHome {
 		}
 	}
 
-	public void persist(Nivelconfig transientInstance) {
-		log.debug("persisting Nivelconfig instance");
+	public void persist(Usuario transientInstance) {
+		log.debug("persisting Usuario instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -47,8 +49,8 @@ public class NivelconfigHome {
 		}
 	}
 
-	public void attachDirty(Nivelconfig instance) {
-		log.debug("attaching dirty Nivelconfig instance");
+	public void attachDirty(Usuario instance) {
+		log.debug("attaching dirty Usuario instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -58,8 +60,8 @@ public class NivelconfigHome {
 		}
 	}
 
-	public void attachClean(Nivelconfig instance) {
-		log.debug("attaching clean Nivelconfig instance");
+	public void attachClean(Usuario instance) {
+		log.debug("attaching clean Usuario instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -69,8 +71,8 @@ public class NivelconfigHome {
 		}
 	}
 
-	public void delete(Nivelconfig persistentInstance) {
-		log.debug("deleting Nivelconfig instance");
+	public void delete(Usuario persistentInstance) {
+		log.debug("deleting Usuario instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -80,11 +82,11 @@ public class NivelconfigHome {
 		}
 	}
 
-	public Nivelconfig merge(Nivelconfig detachedInstance) {
-		log.debug("merging Nivelconfig instance");
+	public Usuario merge(Usuario detachedInstance) {
+		log.debug("merging Usuario instance");
 		try {
-			Nivelconfig result = (Nivelconfig) sessionFactory
-					.getCurrentSession().merge(detachedInstance);
+			Usuario result = (Usuario) sessionFactory.getCurrentSession()
+					.merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -93,11 +95,11 @@ public class NivelconfigHome {
 		}
 	}
 
-	public Nivelconfig findById(NivelconfigId id) {
-		log.debug("getting Nivelconfig instance with id: " + id);
+	public Usuario findById(UsuarioId id) {
+		log.debug("getting Usuario instance with id: " + id);
 		try {
-			Nivelconfig instance = (Nivelconfig) sessionFactory
-					.getCurrentSession().get("Nivelconfig", id);
+			Usuario instance = (Usuario) sessionFactory.getCurrentSession()
+					.get("Usuario", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -110,12 +112,12 @@ public class NivelconfigHome {
 		}
 	}
 
-	public List findByExample(Nivelconfig instance) {
-		log.debug("finding Nivelconfig instance by example");
+	public List findByExample(Usuario instance) {
+		log.debug("finding Usuario instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
-					.createCriteria("Nivelconfig")
-					.add(Example.create(instance)).list();
+					.createCriteria("Usuario").add(Example.create(instance))
+					.list();
 			log.debug("find by example successful, result size: "
 					+ results.size());
 			return results;

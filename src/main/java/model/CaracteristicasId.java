@@ -1,4 +1,6 @@
 package model;
+
+
 // Generated 27/11/2014 02:27:56 AM by Hibernate Tools 3.4.0.CR1
 
 /**
@@ -6,51 +8,51 @@ package model;
  */
 public class CaracteristicasId implements java.io.Serializable {
 
-	private int idCaracteristicas;
-	private int idNivelConfig;
-	private int idEtiqueta;
-	private int idPlantilla;
+	private Integer idCaracteristicas;
+	private Integer idNivelConfig;
+	private Integer idEtiqueta;
+	private Integer idPlantilla;
 
 	public CaracteristicasId() {
 	}
 
-	public CaracteristicasId(int idCaracteristicas, int idNivelConfig,
-			int idEtiqueta, int idPlantilla) {
+	public CaracteristicasId(Integer idCaracteristicas, Integer idNivelConfig,
+			Integer idEtiqueta, Integer idPlantilla) {
 		this.idCaracteristicas = idCaracteristicas;
 		this.idNivelConfig = idNivelConfig;
 		this.idEtiqueta = idEtiqueta;
 		this.idPlantilla = idPlantilla;
 	}
 
-	public int getIdCaracteristicas() {
+	public Integer getIdCaracteristicas() {
 		return this.idCaracteristicas;
 	}
 
-	public void setIdCaracteristicas(int idCaracteristicas) {
+	public void setIdCaracteristicas(Integer idCaracteristicas) {
 		this.idCaracteristicas = idCaracteristicas;
 	}
 
-	public int getIdNivelConfig() {
+	public Integer getIdNivelConfig() {
 		return this.idNivelConfig;
 	}
 
-	public void setIdNivelConfig(int idNivelConfig) {
+	public void setIdNivelConfig(Integer idNivelConfig) {
 		this.idNivelConfig = idNivelConfig;
 	}
 
-	public int getIdEtiqueta() {
+	public Integer getIdEtiqueta() {
 		return this.idEtiqueta;
 	}
 
-	public void setIdEtiqueta(int idEtiqueta) {
+	public void setIdEtiqueta(Integer idEtiqueta) {
 		this.idEtiqueta = idEtiqueta;
 	}
 
-	public int getIdPlantilla() {
+	public Integer getIdPlantilla() {
 		return this.idPlantilla;
 	}
 
-	public void setIdPlantilla(int idPlantilla) {
+	public void setIdPlantilla(Integer idPlantilla) {
 		this.idPlantilla = idPlantilla;
 	}
 
@@ -68,15 +70,4 @@ public class CaracteristicasId implements java.io.Serializable {
 				&& (this.getIdEtiqueta() == castOther.getIdEtiqueta())
 				&& (this.getIdPlantilla() == castOther.getIdPlantilla());
 	}
-
-	public int hashCode() {
-		int result = 17;
-
-		result = 37 * result + this.getIdCaracteristicas();
-		result = 37 * result + this.getIdNivelConfig();
-		result = 37 * result + this.getIdEtiqueta();
-		result = 37 * result + this.getIdPlantilla();
-		return result;
-	}
-
 }

@@ -2,6 +2,7 @@ package web.mb;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -10,10 +11,12 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
+import org.primefaces.event.ReorderEvent;
 import org.primefaces.event.TabChangeEvent;
 
+import service.impl.PlantillaServiceImpl;
+import service.inf.PlantillaService;
 import web.form.FormCrearPlantilla_1;
 import web.form.FormCrearPlantilla_2;
 import web.form.RowTemplate;
@@ -24,7 +27,7 @@ import web.util.Util;
 
 @ManagedBean(name="cpMB")
 @ViewScoped
-public class CrearPlantillaMB implements Serializable{
+public class CrearPlantillaController implements Serializable{
 /**
 	 * 
 	 */
@@ -32,6 +35,11 @@ private static final long serialVersionUID = 1L;
 private FormCrearPlantilla_1 form1;
 private FormCrearPlantilla_2 form2;
 private List<RowTemplate> rows;
+
+/**
+ * Servicios
+ */
+PlantillaService plantillaService;
 
 /**
  * Query's 
@@ -62,6 +70,8 @@ private void init(){
 	setFa(new PropertiesGUI(true,true));
 	setRowsel(new RowTemplate(new PropertiesVentanaTransformado(true,true)));	
 	props=Util.getProperties("parametros.properties");
+	
+	plantillaService=new PlantillaServiceImpl();
 }
 public void ontTabChange(TabChangeEvent event){
 	if(event.getTab().getId().equals("tab2")){
@@ -106,25 +116,49 @@ public void listenerCaracterValido(){
 	}
 }
 
-public void actionOneMenuVT(RowTemplate row){
-	RowTemplate raw=row;
+public void onRowReOrder(ReorderEvent event){
+	System.out.println();event.getToIndex();//indice inicial de fila seleccionada
+	event.getFromIndex();//indice final de fila ocupada
+	int i=0;
+	for(RowTemplate row:rows){
+		row.setId(i);
+		i++;
+		System.out.println("Fila movida: ");
+		System.out.println("Row "+row.getId());
+		System.out.println("Nombre "+ row.getNombre());
+		System.out.println();
+	}
+}
+
+public void actionOneMenuVT(RowTemplate row){	
+	System.out.println("Entrando al OneMenu in Primefaces ******");
 	System.out.println("Size: "+rows.size());
 	System.out.println("Id: "+row.getId());
-	System.out.println("Caracter : "+raw.getTransformado().getCaracter());
-	System.out.println("Posicion :"+raw.getTransformado().getPosicion());
-	setRowsel(raw);
+	System.out.println("Caracter : "+row.getTransformado().getCaracter());
+	System.out.println("Posicion :"+row.getTransformado().getPosicion());
+	setRowsel(row);
 }
 
 public void actionButtonSaveVT(){	
-	this.rows.set(getRowsel().getId(), getRowsel());	
+	
+	this.rows.set(getRowsel().getId(), getRowsel());
+	System.out.println("Grabando la propiedad de Transformado al RowTemplate ******");
+	System.out.println("Se grabo la fila N°"+getRowsel().getId());
+	for(RowTemplate row:rows){
+		System.out.println("Row "+row.getId());
+		System.out.println("Caracter"+row.getTransformado().getCaracter());
+		System.out.println("Posicion"+row.getTransformado().getPosicion());
+		System.out.println();
+	}
 }
 
 public  void actionButtonViewVT(RowTemplate row){
 	RowTemplate raw=row;
+	System.out.println("View lupa in Primefaces ******");
 	System.out.println("Size: "+rows.size());
 	System.out.println("Fila View:"+row.getId());
 	System.out.println("Caracter : "+raw.getTransformado().getCaracter());
-	System.out.println("Posicion :"+raw.getTransformado().getPosicion());
+	System.out.println("Posicion :"+raw.getTransformado().getPosicion());	
 	this.setRowsel(raw);
 }
 
@@ -186,7 +220,7 @@ public void reconocedorSubCombo(){
 	String label=form2.getCombos().get(1).getItemSel();
 	
 	if (!label.equalsIgnoreCase("") && !item.equalsIgnoreCase("")) {
-		RowTemplate row = new RowTemplate(rows.size(), item, label, 4, 0, false, propVT);
+		RowTemplate row = new RowTemplate(rows.size(), item, label,"", 4, 0, false, propVT);
 		rows.add(row);
 	}
 	for(RowTemplate row:rows){
@@ -197,7 +231,12 @@ public void reconocedorSubCombo(){
 	}
 }
 public void agregarFA(){
-	
+	PropertiesVentanaTransformado propVT=new 
+			PropertiesVentanaTransformado(true, true, false, "", 2);
+	String item= props.getProperty("plantilla.fadicional")+"1";//Funcion Adicional.
+	String label="campo x";//Campo de la consulta de agrupamiento.
+	RowTemplate row = new RowTemplate(rows.size(), item, label,"", 4, 0, false, propVT);
+	rows.add(row);
 }
 public void eliminarFila(){//Antes eliminarFA	
 
@@ -216,6 +255,29 @@ public void validarConfiguracionPlantilla(){
 	 * Pedazo de codigo que se encarga de validar la configuracion en el datatable
 	 */
 	message.showMessage(3);
+}
+
+public void guardarPlantilla(){
+	String query=getQuery();
+	List<String> itemsGrupal=form2.getCombos().get(0).getItems();//Combo Grupal
+	List<String> itemsCampos=form2.getCombos().get(1).getItems();//Combo Campos
+	
+	
+	Map<String,Integer> etiquetas=new HashMap<String,Integer>();
+	if(form1.getCheckboxs().get(0).isMarcado()){
+		etiquetas.put(props.getProperty("plantilla.header"),form1.getSpinners().get(0).getCantidad());
+	}
+	if(form1.getCheckboxs().get(1).isMarcado()){
+		etiquetas.put(props.getProperty("plantilla.detail"), 1);
+	}
+	
+	if(form1.getCheckboxs().get(2).isMarcado()){
+		etiquetas.put(props.getProperty("plantilla.footer"), form1.getSpinners().get(1).getCantidad());
+	}
+
+	List<RowTemplate> rowsTemplate=getRows();
+	
+	plantillaService.save(query, etiquetas, rowsTemplate);
 }
 
 public String getQuery() {

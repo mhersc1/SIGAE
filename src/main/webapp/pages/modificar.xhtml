@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+
+
+<h:body>
+
+	<h:form>
+		<p:growl>
+			<p:panel id="Añadir" header="Consulta Query " footer="sql"
+				style="margin-bottom:20px">
+				<h:panelGrid columns="2" cellpadding="10">
+
+					<h:form>
+						<p:inputTextarea rows="5" cols="30"  counter="display"
+							maxlength="250" counterTemplate="caracter que falta: {0}"
+							autoResize="false" style="width:660px;height:90px"/>
+						<h:outputText id="display" />
+
+
+
+					</h:form>
+
+
+
+					<h:form>
+						<p:commandButton value="AÑADIR" id="bañadir"
+							icon="ui-icon-plusthick
+ "
+							actionListener="#{modificarController.añadir}" />
+
+					</h:form>
+
+
+				</h:panelGrid>
+
+
+
+			</p:panel>
+
+
+			<p:panel id="CaractPlantilla"
+				header="Las Caracteristicas de la Plantilla "
+				style="margin-bottom:20px">
+
+
+				<p:dataTable id="Caractdeplantilla" var="atri"
+					selection="#{modificarController.selectedmodi}"
+					rowKey="#{atri.nombre}" selectionMode="single"
+					value="#{modificarController.list}" draggableRows="true"
+					widgetVar="Caractdeplantilla"
+					emptyMessage="No hay campos por configurar!">
+
+					<p:column headerText="Campo">
+						<h:outputText value="#{atri.nombre}" />
+					</p:column>
+					<p:column headerText="Tipo">
+						<h:outputText value="#{atri.tipo}" />
+					</p:column>
+					<p:column headerText="Tamaño">
+						<h:outputText value="#{atri.tamaño}" />
+					</p:column>
+					<p:column headerText="Cifrado">
+						<h:outputText value="#{atri.cifrado}" />
+					</p:column>
+					<p:column headerText="Transformado">
+						<h:outputText value="#{atri.transformado}" />
+					</p:column>
+
+				</p:dataTable>
+
+				<p:contextMenu for="CaractPlantilla">
+					<p:menuitem value="Añadir " icon="ui-icon-plusthick"
+						actionListener="#{modificarController.añadirFila()}"
+						update="@widgetVar(CaractPlantilla),
+												@widgetVar(buttonGenerarArchivo),
+												@widgetVar(buttonGuardarCambios)" />
+					<p:menuitem value="Modificar " icon="ui-icon-pencil"
+						actionListener="#{modificarController.modificarFila()}"
+						update="@widgetVar(CaractPlantilla),
+												@widgetVar(buttonGenerarArchivo),
+												@widgetVar(buttonGuardarCambios)" />
+					<p:menuitem value="Eliminar " icon="ui-icon-close"
+						actionListener="#{modificarController.eliminarFila()}"
+						update="@widgetVar(CaractPlantilla),
+												@widgetVar(buttonGenerarArchivo),
+												@widgetVar(buttonGuardarCambios)" />
+				</p:contextMenu>
+			</p:panel>
+
+			<p:panel>
+				<h:panelGrid columns="2">
+
+					<h:form>
+
+						<p:commandButton widgetVar="buttonGenerarArchivo"
+							value="Generar Archivo"
+							actionListener="#{modificarController.generar}"
+							icon="ui-icon-document" />
+
+					</h:form>
+
+					<h:form>
+						<p:commandButton widgetVar="buttonGuardarCambios"
+							value="Guardar Cambios"
+							actionListener="#{modificarController.guardar}"
+							icon="ui-icon-disk" />
+
+
+					</h:form>
+
+
+
+				</h:panelGrid>
+
+
+			</p:panel>
+
+
+		</p:growl>
+
+
+
+
+	</h:form>
+
+
+
+</h:body>
+
+</html>

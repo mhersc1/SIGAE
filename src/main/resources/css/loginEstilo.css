@@ -1,0 +1,48 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	font-family: Verdana, sans-serif;
+	font-size: 12px
+}
+
+.fondoEncabezado {
+	background-color: #DFD6C3 !important;
+}
+
+.fondoFooter {
+	background-color: #DFD6C3 !important;
+}
+
+#lycLogin {
+	padding: 0px;
+	background-image:
+		url("/SIGAE/resources/img/fondo_login.jpg");
+	background-position: 50% 50%;
+	background-repeat: no-repeat;
+	display: block;
+	height: 140px;
+	/* text-indent:-9999px;*/
+	-moz-background-size: cover;
+	-webkit-background-size: cover;
+	background-size: cover;
+
+}
+
+/*Para modificar estilos predefinidos del primefaces*/
+.pe-layout-pane-content {
+	padding: 0px;
+	overflow: auto;
+}
+
+.ui-corner-all {
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+}
+
+.DataTable table>thead>tr>th,.DataTable table>tbody,.DataTable table>tbody>tr,.DataTable table>tbody>tr>td
+	{
+	border: none !important;
+}
+
+	

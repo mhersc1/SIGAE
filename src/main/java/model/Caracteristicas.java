@@ -12,14 +12,14 @@ public class Caracteristicas implements java.io.Serializable {
 	private CaracteristicasId id;
 	private Nivelconfig nivelconfig;
 	private Integer tamanio;
-	private String tipoDato;
+	private Integer tipoDato;
 	private String cifrado;
 	private String transformado;
 	private String caracter;
-	private String posicion;
+	private Integer posicion;
 	private String campo;
 	private String descripcion;
-	private String orden;
+	private Integer orden;
 	private Set queries = new HashSet(0);
 
 	public Caracteristicas() {
@@ -31,9 +31,9 @@ public class Caracteristicas implements java.io.Serializable {
 	}
 
 	public Caracteristicas(CaracteristicasId id, Nivelconfig nivelconfig,
-			Integer tamanio, String tipoDato, String cifrado,
-			String transformado, String caracter, String posicion,
-			String campo, String descripcion, String orden, Set queries) {
+			Integer tamanio, Integer tipoDato, String cifrado,
+			String transformado, String caracter, Integer posicion,
+			String campo, String descripcion, Integer orden, Set queries) {
 		this.id = id;
 		this.nivelconfig = nivelconfig;
 		this.tamanio = tamanio;
@@ -72,11 +72,11 @@ public class Caracteristicas implements java.io.Serializable {
 		this.tamanio = tamanio;
 	}
 
-	public String getTipoDato() {
+	public Integer getTipoDato() {
 		return this.tipoDato;
 	}
 
-	public void setTipoDato(String tipoDato) {
+	public void setTipoDato(Integer tipoDato) {
 		this.tipoDato = tipoDato;
 	}
 
@@ -104,11 +104,11 @@ public class Caracteristicas implements java.io.Serializable {
 		this.caracter = caracter;
 	}
 
-	public String getPosicion() {
+	public Integer getPosicion() {
 		return this.posicion;
 	}
 
-	public void setPosicion(String posicion) {
+	public void setPosicion(Integer posicion) {
 		this.posicion = posicion;
 	}
 
@@ -128,11 +128,11 @@ public class Caracteristicas implements java.io.Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public String getOrden() {
+	public Integer getOrden() {
 		return this.orden;
 	}
 
-	public void setOrden(String orden) {
+	public void setOrden(Integer orden) {
 		this.orden = orden;
 	}
 

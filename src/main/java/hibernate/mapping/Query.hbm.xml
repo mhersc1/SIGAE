@@ -5,19 +5,19 @@
 <hibernate-mapping>
     <class name="model.Query" table="query" catalog="dbsigae">
         <composite-id name="id" class="model.QueryId">
-            <key-property name="idQuery" type="int">
+            <key-property name="idQuery" type="java.lang.Integer">
                 <column name="idQuery" />
             </key-property>
-            <key-property name="idCaracteristicas" type="int">
+            <key-property name="idCaracteristicas" type="java.lang.Integer">
                 <column name="idCARACTERISTICAS" />
             </key-property>
-            <key-property name="idNivelConfig" type="int">
+            <key-property name="idNivelConfig" type="java.lang.Integer">
                 <column name="idNivelConfig" />
             </key-property>
-            <key-property name="idEtiqueta" type="int">
+            <key-property name="idEtiqueta" type="java.lang.Integer">
                 <column name="idETIQUETA" />
             </key-property>
-            <key-property name="idPlantilla" type="int">
+            <key-property name="idPlantilla" type="java.lang.Integer">
                 <column name="idPLANTILLA" />
             </key-property>
         </composite-id>

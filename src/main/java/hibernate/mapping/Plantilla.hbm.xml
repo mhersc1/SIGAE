@@ -4,7 +4,7 @@
 <!-- Generated 27/11/2014 02:28:58 AM by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
     <class name="model.Plantilla" table="plantilla" catalog="dbsigae">
-        <id name="idPlantilla" type="int">
+        <id name="idPlantilla" type="java.lang.Integer">
             <column name="idPLANTILLA" />
             <generator class="assigned" />
         </id>

@@ -15,8 +15,7 @@
 			//Open Dialogo ventana Transformado
 		    var val = $(element).find('option:selected').text();
 		    if(val == 'Si') {
-		    	PF('CTDialog').show();
-		    	func();		    			    	
+		    	PF('CTDialog').show();		    		    			    			    	
 		    }
 		    	
 	}
@@ -131,7 +130,7 @@
 							selectionMode="single" value="#{cpMB.rows}" draggableRows="true"
 							widgetVar="tableTemplate"							
 							emptyMessage="No hay campos por configurar!">							
-							<p:ajax event="rowReorder" />
+							<p:ajax event="rowReorder" listener="#{cpMB.onRowReOrder}"/>
 							<f:facet name="header">
 								Configuración de plantilla
 		 					</f:facet>
@@ -160,13 +159,13 @@
 								<p:panelGrid columns="2">							
 									<p:selectOneMenu 		id="oneMenuTransf"																																												
 															value="#{row.transformado.transformado}"													  		
-													  		onchange="openDialogVT(this);">										
+													  		onchange="openDialogVT(this);func_#{row.id}();">										
 										<p:ajax 			event="change"								
 															update="buttonT" />											
 	                						<f:selectItem 	itemValue="true" 	itemLabel="Si"/>
 	                						<f:selectItem 	itemValue="false" 	itemLabel="No"/>
 									</p:selectOneMenu>
-								
+									
 									<p:commandButton		disabled="#{!row.transformado.transformado}"
 															action="#{cpMB.actionButtonViewVT(row)}"
 															id="buttonT" 
@@ -175,17 +174,19 @@
 															oncomplete="PF('verCT').show();">										
 									</p:commandButton>									
 								</p:panelGrid>
-								<p:remoteCommand			id="remote"															
-															name="func"	
-															action="#{cpMB.actionOneMenuVT(row)}">									
-								</p:remoteCommand>																													
+									<p:remoteCommand		id="remote"												
+															name="func_#{row.id}"	
+															action="#{cpMB.actionOneMenuVT(row)}" />																													
 							</p:column>
-						</p:dataTable>
+						</p:dataTable>									
 						<br />
-						<p:commandButton widgetVar="buttonGenerarArchivo"
-							value="Generar Archivo" disabled="#{cpMB.rows.size()==0}" />
-						<p:commandButton widgetVar="buttonGuardarPlantilla"
-							value="Guardar Plantilla" disabled="#{cpMB.rows.size()==0}" />
+						<p:commandButton 	widgetVar="buttonGenerarArchivo"
+											value="Generar Archivo" 
+											disabled="#{cpMB.rows.size()==0}"/>											
+						<p:commandButton 	widgetVar="buttonGuardarPlantilla"
+											value="Guardar Plantilla" 
+											disabled="#{cpMB.rows.size()==0}"
+											action="#{cpMB.guardarPlantilla()}" />
 					</p:panel>
 				</div>
 			</p:tab>
@@ -270,13 +271,17 @@
 				modal="true" showEffect="fade" hideEffect="fade">
 							<p:outputPanel>
 								<p:panelGrid columns="2">
-									<h:outputLabel 	value="Caracter" />
-									<p:inputText 	value="#{cpMB.rowsel.transformado.caracter}"
-													readonly="true"/>
+									<h:outputLabel 		value="Caracter" />
+									<p:inputText 		value="#{cpMB.rowsel.transformado.caracter}"
+														readonly="true"/>
 									
-									<h:outputLabel 	value="Posicion" />
-									<p:inputText 	value="#{cpMB.rowsel.transformado.posicion}"
-													readonly="true"/>
+									<h:outputLabel 		value="Posicion" />
+									<p:selectOneMenu	style="font-weight:bold"
+														value="#{cpMB.rowsel.transformado.posicion}"
+														disabled="true" >
+										<f:selectItem 	itemLabel="Izquierda"	itemValue="0"/>
+										<f:selectItem	itemLabel="Derecha"		itemValue="1" />
+									</p:selectOneMenu>									
 								</p:panelGrid>
 							</p:outputPanel>			
 						</p:dialog>															

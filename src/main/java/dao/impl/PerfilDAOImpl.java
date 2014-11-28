@@ -1,12 +1,11 @@
-package dao;
+package dao.impl;
 // Generated 27/11/2014 02:39:51 AM by Hibernate Tools 3.4.0.CR1
 
 import java.util.List;
 
 import javax.naming.InitialContext;
 
-import model.Usuario;
-import model.UsuarioId;
+import model.Perfil;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -14,14 +13,16 @@ import org.hibernate.LockMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Example;
 
+import dao.inf.PerfilDAO;
+
 /**
- * Home object for domain model class Usuario.
- * @see .Usuario
+ * Home object for domain model class Perfil.
+ * @see .Perfil
  * @author Hibernate Tools
  */
-public class UsuarioHome {
+public class PerfilDAOImpl implements PerfilDAO{
 
-	private static final Log log = LogFactory.getLog(UsuarioHome.class);
+	private static final Log log = LogFactory.getLog(PerfilDAOImpl.class);
 
 	private final SessionFactory sessionFactory = getSessionFactory();
 
@@ -36,8 +37,8 @@ public class UsuarioHome {
 		}
 	}
 
-	public void persist(Usuario transientInstance) {
-		log.debug("persisting Usuario instance");
+	public void persist(Perfil transientInstance) {
+		log.debug("persisting Perfil instance");
 		try {
 			sessionFactory.getCurrentSession().persist(transientInstance);
 			log.debug("persist successful");
@@ -47,8 +48,8 @@ public class UsuarioHome {
 		}
 	}
 
-	public void attachDirty(Usuario instance) {
-		log.debug("attaching dirty Usuario instance");
+	public void attachDirty(Perfil instance) {
+		log.debug("attaching dirty Perfil instance");
 		try {
 			sessionFactory.getCurrentSession().saveOrUpdate(instance);
 			log.debug("attach successful");
@@ -58,8 +59,8 @@ public class UsuarioHome {
 		}
 	}
 
-	public void attachClean(Usuario instance) {
-		log.debug("attaching clean Usuario instance");
+	public void attachClean(Perfil instance) {
+		log.debug("attaching clean Perfil instance");
 		try {
 			sessionFactory.getCurrentSession().lock(instance, LockMode.NONE);
 			log.debug("attach successful");
@@ -69,8 +70,8 @@ public class UsuarioHome {
 		}
 	}
 
-	public void delete(Usuario persistentInstance) {
-		log.debug("deleting Usuario instance");
+	public void delete(Perfil persistentInstance) {
+		log.debug("deleting Perfil instance");
 		try {
 			sessionFactory.getCurrentSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -80,11 +81,11 @@ public class UsuarioHome {
 		}
 	}
 
-	public Usuario merge(Usuario detachedInstance) {
-		log.debug("merging Usuario instance");
+	public Perfil merge(Perfil detachedInstance) {
+		log.debug("merging Perfil instance");
 		try {
-			Usuario result = (Usuario) sessionFactory.getCurrentSession()
-					.merge(detachedInstance);
+			Perfil result = (Perfil) sessionFactory.getCurrentSession().merge(
+					detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -93,11 +94,11 @@ public class UsuarioHome {
 		}
 	}
 
-	public Usuario findById(UsuarioId id) {
-		log.debug("getting Usuario instance with id: " + id);
+	public Perfil findById(int id) {
+		log.debug("getting Perfil instance with id: " + id);
 		try {
-			Usuario instance = (Usuario) sessionFactory.getCurrentSession()
-					.get("Usuario", id);
+			Perfil instance = (Perfil) sessionFactory.getCurrentSession().get(
+					"Perfil", id);
 			if (instance == null) {
 				log.debug("get successful, no instance found");
 			} else {
@@ -110,11 +111,11 @@ public class UsuarioHome {
 		}
 	}
 
-	public List findByExample(Usuario instance) {
-		log.debug("finding Usuario instance by example");
+	public List findByExample(Perfil instance) {
+		log.debug("finding Perfil instance by example");
 		try {
 			List results = sessionFactory.getCurrentSession()
-					.createCriteria("Usuario").add(Example.create(instance))
+					.createCriteria("Perfil").add(Example.create(instance))
 					.list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

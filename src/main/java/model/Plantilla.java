@@ -9,7 +9,7 @@ import java.util.Set;
  */
 public class Plantilla implements java.io.Serializable {
 
-	private int idPlantilla;
+	private Integer idPlantilla;
 	private String nombre;
 	private String direccion;
 	private String query;
@@ -18,11 +18,11 @@ public class Plantilla implements java.io.Serializable {
 	public Plantilla() {
 	}
 
-	public Plantilla(int idPlantilla) {
+	public Plantilla(Integer idPlantilla) {
 		this.idPlantilla = idPlantilla;
 	}
 
-	public Plantilla(int idPlantilla, String nombre, String direccion,
+	public Plantilla(Integer idPlantilla, String nombre, String direccion,
 			String query, Set etiquetas) {
 		this.idPlantilla = idPlantilla;
 		this.nombre = nombre;
@@ -31,11 +31,11 @@ public class Plantilla implements java.io.Serializable {
 		this.etiquetas = etiquetas;
 	}
 
-	public int getIdPlantilla() {
+	public Integer getIdPlantilla() {
 		return this.idPlantilla;
 	}
 
-	public void setIdPlantilla(int idPlantilla) {
+	public void setIdPlantilla(Integer idPlantilla) {
 		this.idPlantilla = idPlantilla;
 	}
 

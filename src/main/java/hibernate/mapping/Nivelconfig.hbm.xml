@@ -5,13 +5,13 @@
 <hibernate-mapping>
     <class name="model.Nivelconfig" table="nivelconfig" catalog="dbsigae">
         <composite-id name="id" class="model.NivelconfigId">
-            <key-property name="idNivelConfig" type="int">
+            <key-property name="idNivelConfig" type="java.lang.Integer">
                 <column name="idNivelConfig" />
             </key-property>
-            <key-property name="idEtiqueta" type="int">
+            <key-property name="idEtiqueta" type="java.lang.Integer">
                 <column name="idETIQUETA" />
             </key-property>
-            <key-property name="idPlantilla" type="int">
+            <key-property name="idPlantilla" type="java.lang.Integer">
                 <column name="idPLANTILLA" />
             </key-property>
         </composite-id>
